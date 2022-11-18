@@ -3,7 +3,7 @@ import React from "react";
 
 const Sidebar = () => {
     return (
-        <div className="flex h-screen w-[288px] flex-col bg-gray-900 p-3 shadow">
+        <div className="sticky top-0 flex h-screen w-[288px] flex-col bg-gray-900 p-3 shadow">
             <div className="space-y-3">
                 <div className="flex items-center justify-center">
                     <h2 className="text-3xl font-bold text-white">
@@ -15,7 +15,7 @@ const Sidebar = () => {
                     <ul className="space-y-1 pt-2 pb-4 text-sm">
                         <li className="flex justify-center rounded-sm  py-2">
                             <Link
-                                href=""
+                                href="/categories"
                                 className="flex items-center space-x-3 rounded-md p-2"
                             >
                                 <span className="text-[25px]  text-white">
@@ -25,7 +25,7 @@ const Sidebar = () => {
                         </li>
                         <li className="flex justify-center rounded-sm py-2">
                             <Link
-                                href=""
+                                href="/posts"
                                 className="flex items-center space-x-3 rounded-md p-2"
                             >
                                 <span className="text-[25px]  text-white">

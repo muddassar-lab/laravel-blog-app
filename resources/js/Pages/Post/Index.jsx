@@ -1,13 +1,11 @@
-import Pagination from "@/Components/Pagination";
+import PostTable from "@/Components/PostTable";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Link, usePage } from "@inertiajs/inertia-react";
+import { Button } from "@material-tailwind/react";
 import React from "react";
-import { Button, IconButton } from "@material-tailwind/react";
-import CategoryRow from "@/Components/CategoryRow";
-import CategoryTable from "@/Components/CategoryTable";
 
 const Index = () => {
-    const { categories } = usePage().props;
+    const { posts } = usePage().props;
 
     return (
         <AuthenticatedLayout>
@@ -17,7 +15,7 @@ const Index = () => {
                         <div className="flex justify-between border-b border-gray-200 bg-white p-2">
                             <div className="search"></div>
                             <div className="w-[150px]">
-                                <Link href={route("categories.create")}>
+                                <Link href={route("posts.create")}>
                                     <Button className="w-[120px]">
                                         Create
                                     </Button>
@@ -27,7 +25,7 @@ const Index = () => {
                     </div>
                 </div>
             </div>
-            <CategoryTable categories={categories} />
+            <PostTable posts={posts} />
         </AuthenticatedLayout>
     );
 };
