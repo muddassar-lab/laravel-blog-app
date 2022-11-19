@@ -15,8 +15,9 @@ return new class extends Migration {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->integer('likes');
-            $table->integer('comments');
+            $table->integer('likes')->default(0);
+            $table->string('image_path');
+            $table->integer('comments')->default(0);
             $table->text('description');
             $table->enum('status', ['active', 'inactive']);
             $table->foreignId('author_id')

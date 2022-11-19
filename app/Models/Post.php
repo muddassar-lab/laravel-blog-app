@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,14 +44,22 @@ class Post extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'title',
         'likes',
         'comments',
+        'image_path',
         'description',
         'category_id',
         'author_id'
     ];
 
+    protected $appends = ['full_image_path'];
+    protected function fullImagePath(): Attribute
+    {
+        return new Attribute(
+            get: fn() => asset("storage/" . $this->image_path),
+        );
+    }
     //relations
     public function user()
     {

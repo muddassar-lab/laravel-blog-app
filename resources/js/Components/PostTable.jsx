@@ -21,6 +21,7 @@ const PostTable = ({ posts, name }) => {
                             <thead>
                                 <tr className="bg-gray-100">
                                     <th className="w-20 px-4 py-2">No.</th>
+                                    <th className="w-20 px-4 py-2">Image.</th>
                                     <th className="px-4 py-2">Title</th>
                                     <th className="px-4 py-2">Description</th>
                                     <th className="px-4 py-2">category</th>

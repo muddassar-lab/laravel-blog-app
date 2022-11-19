@@ -20,9 +20,9 @@ class PostFactory extends Factory
     {
         return [
             'title' => fake()->realText(30),
-            'likes' => fake()->numberBetween(1),
+            'description' => fake()->realText(),
+            'image_path' => 'https://i.ibb.co/9gd924y/Laravel-Seeder-Example.png',
             'comments' => fake()->numberBetween(1),
-            'description' => fake()->realText(400),
             'status' => fake()->randomElement(['active', 'inactive']),
             'author_id' => User::factory(),
             'category_id' => Category::factory(),

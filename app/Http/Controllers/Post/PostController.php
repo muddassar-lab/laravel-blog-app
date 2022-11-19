@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Category;
 use App\Models\Post;
+use Auth;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Redirect;
+use Storage;
 
 class PostController extends Controller
 {
@@ -37,11 +41,24 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //
+
+        $path = $request->file('image_path')->store('posts', "public");
+
+        $uid = Auth::id();
+        Post::create([
+            'description' => $request->description,
+            'title' => $request->title,
+            'status' => $request->status,
+            'category_id' => $request->category,
+            'author_id' => $uid,
+            'image_path' => $path,
+        ]);
+        return Redirect::route('posts.home');
+
     }
 
     /**
@@ -59,11 +76,13 @@ class PostController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function edit($id)
     {
-        //
+        $categories = Category::all();
+        $post = Post::with('category')->find($id);
+        return Inertia::render('Post/Edit', ['postModel' => $post, 'categories' => $categories]);
     }
 
     /**
@@ -71,11 +90,28 @@ class PostController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePostRequest $request, int $id)
     {
-        //
+
+        $path = NULL;
+        if ($request->hasFile('image')) {
+            if (Storage::delete($request->image_path)) {
+                $path = $request->file('image')->store('posts');
+            }
+        } else {
+            $path = $request->image_path;
+        }
+
+        $post = Post::find($id);
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->image_path = $path;
+        $post->category_id = $request->category;
+        $post->status = $request->status;
+        $post->save();
+        return Redirect::route("posts.home");
     }
 
     /**
@@ -88,6 +124,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+        Storage::delete($post->image_path);
         $post->delete();
         return Redirect::route('posts.home');
     }

@@ -9,17 +9,19 @@ import {
     Button,
 } from "@material-tailwind/react";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
-const Create = () => {
+const Edit = () => {
+    const { postModel, categories } = usePage().props;
     const input = useRef();
-    const { categories } = usePage().props;
     const { data, setData, post, processing, errors, reset } = useForm({
-        title: "",
-        category: categories[0].id,
-        status: "active",
-        description: "",
-        image_path: null,
+        title: postModel.title,
+        category: postModel.category.id,
+        status: postModel.status,
+        description: postModel.description,
+        image_path: postModel.image_path,
+        image: null,
+        _method: "PUT",
     });
     const handleChange = (event) => {
         setData(
@@ -29,19 +31,21 @@ const Create = () => {
                 : event.target.value
         );
     };
+
     const submit = () => {
         if (
             data.title == "" &&
             data.description != "" &&
             data.category != "" &&
-            data.image_path != null
+            data.image_path != ""
         ) {
             return;
         }
-        post(route("posts.store"));
+
+        post(route("posts.update", [postModel.id]));
     };
     const onFileChange = async (event) => {
-        setData("image_path", event.target.files[0]);
+        setData("image", event.target.files[0]);
         input.current.value = event.target.files[0];
     };
 
@@ -123,7 +127,7 @@ const Create = () => {
                                                 color="white"
                                             />
                                         ) : (
-                                            "Create Post"
+                                            "Update post"
                                         )}
                                     </Button>
                                 </div>
@@ -136,4 +140,4 @@ const Create = () => {
     );
 };
 
-export default Create;
+export default Edit;

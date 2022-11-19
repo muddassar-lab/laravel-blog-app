@@ -1,11 +1,19 @@
-import { Link } from "@inertiajs/inertia-react";
+import { Link, usePage } from "@inertiajs/inertia-react";
 import { IconButton } from "@material-tailwind/react";
 import React from "react";
 
 const PostRow = ({ post, name }) => {
+    console.log(post);
     return (
         <tr className="text-center">
             <td className="border px-4 py-2">{post.id}</td>
+            <td>
+                <img
+                    className="h-[80px] w-[100px] "
+                    src={post.full_image_path}
+                    alt=""
+                />
+            </td>
             <td className="border px-4 py-2">{post.title}</td>
             <td className=" text-ellipsis border px-4 py-2">
                 {post.description.length > 15
@@ -16,7 +24,7 @@ const PostRow = ({ post, name }) => {
                 {name != null ? name : post.category.name}
             </td>
             <td className="flex flex-row items-center justify-center border px-4 py-2">
-                <Link>
+                <Link href={route("posts.edit", post.id)}>
                     <IconButton color="gray" className="mx-2">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

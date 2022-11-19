@@ -52,6 +52,9 @@ Route::middleware('auth')->group(function () {
             Route::get("/", [PostController::class, 'index'])->name('posts.home');
             Route::delete("/{id}", [PostController::class, 'destroy'])->name('posts.destroy');
             Route::get("/create", [PostController::class, 'create'])->name('posts.create');
+            Route::post("/", [PostController::class, 'store'])->name('posts.store');
+            Route::get("/{id}/edit", [PostController::class, 'edit'])->name('posts.edit');
+            Route::put("/{id}", [PostController::class, 'update'])->name("posts.update");
         }
     );
 
