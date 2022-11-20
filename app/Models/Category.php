@@ -53,6 +53,5 @@ class Category extends Model
                 }
             );
         });
-
     }
 }

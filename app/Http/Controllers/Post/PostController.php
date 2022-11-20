@@ -128,6 +128,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         $post->delete();
+
         return Redirect::route('posts.home')->with('success', 'Post Deleted Successfully');
     }
 }
