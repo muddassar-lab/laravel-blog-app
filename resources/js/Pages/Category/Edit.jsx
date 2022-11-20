@@ -34,27 +34,32 @@ const Edit = () => {
             <div className="pt-4">
                 <div className=" max-w-xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="flex items-center justify-center border-b border-gray-200 bg-white p-6">
-                            <Input
-                                name="name"
-                                value={data.name}
-                                onChange={handleChange}
-                                label="category name"
-                                className="px-2"
-                                size="lg"
-                            />
-                            <p className="mx-2"></p>
-                            <Button
-                                className="flex w-[120px] justify-center"
-                                onClick={submit}
-                            >
-                                {" "}
-                                {processing ? (
-                                    <PuffLoader size={20} color="white" />
-                                ) : (
-                                    "Update"
-                                )}
-                            </Button>
+                        <div className="flex flex-col items-start justify-center border-b border-gray-200 bg-white p-6">
+                            <div className="flex w-full flex-row items-center">
+                                <Input
+                                    name="name"
+                                    value={data.name}
+                                    onChange={handleChange}
+                                    label="category name"
+                                    className="px-2"
+                                    size="lg"
+                                />
+                                <p className="mx-2"></p>
+                                <Button
+                                    className="flex w-[120px] justify-center"
+                                    onClick={submit}
+                                >
+                                    {" "}
+                                    {processing ? (
+                                        <PuffLoader size={20} color="white" />
+                                    ) : (
+                                        "Update"
+                                    )}
+                                </Button>
+                            </div>
+                            <p className="my-2 font-bold text-red-400">
+                                {errors.name}
+                            </p>
                         </div>
                     </div>
                 </div>

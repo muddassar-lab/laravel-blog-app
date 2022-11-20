@@ -60,6 +60,9 @@ const Create = () => {
                                     size="lg"
                                     label="title"
                                 />
+                                <p className="mb-3 font-bold text-red-400">
+                                    {errors.title}
+                                </p>
                             </div>
                             <p className="mb-4"></p>
                             <div className="flex w-full flex-row ">
@@ -100,16 +103,24 @@ const Create = () => {
                                     label="description"
                                     size="lg"
                                 ></Textarea>
+                                <p className="mb-3 font-bold text-red-400">
+                                    {errors.description}
+                                </p>
                             </div>
 
                             <div className="flex w-full">
-                                <Input
-                                    ref={input}
-                                    accept="image/*"
-                                    type="file"
-                                    onChange={onFileChange}
-                                    label="post image"
-                                />
+                                <div className="w-full">
+                                    <Input
+                                        ref={input}
+                                        accept="image/*"
+                                        type="file"
+                                        onChange={onFileChange}
+                                        label="post image"
+                                    />
+                                    <p className="mb-3 font-bold text-red-400">
+                                        {errors.image_path}
+                                    </p>
+                                </div>
                                 <div className="mx-2 w-[200px] ">
                                     <Button
                                         disabled={processing}

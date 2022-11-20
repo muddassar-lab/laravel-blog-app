@@ -27,7 +27,7 @@ const Login = () => {
     }, []);
     return (
         <GuestLayout>
-            <div className="h-[500px] w-[400px] bg-white p-[30px] shadow-lg">
+            <div className="h-[550px] w-[400px] bg-white p-[30px] shadow-lg">
                 <h1 className="text-[20px]">Welcome !</h1>
                 <h1 className="mt-5 text-[31px] font-bold">Admin Panel</h1>
                 <form onSubmit={submit} className="my-5">
@@ -43,7 +43,9 @@ const Login = () => {
                         id="email"
                         name="email"
                     />
-                    <p className="my-3"></p>
+                    <p className="mb-3 font-bold text-red-400">
+                        {errors.email}
+                    </p>
                     <label htmlFor="email" className="ml-1 font-bold">
                         Password
                     </label>
@@ -56,6 +58,7 @@ const Login = () => {
                         id="password"
                         name="password"
                     />
+                    <p className="font-bold text-red-400">{errors.password}</p>
                     <div className="flex justify-end py-2">
                         <Link className=" text-[12px] font-bold">
                             Forgot Password?
