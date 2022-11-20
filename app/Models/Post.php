@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
+use Storage;
 
 /**
  * App\Models\Post
@@ -60,7 +62,7 @@ class Post extends Model
     protected function fullImagePath(): Attribute
     {
         return new Attribute(
-            get: fn () => asset('storage/'.$this->image_path),
+            get: fn() => asset('storage/' . $this->image_path),
         );
     }
 
@@ -73,5 +75,16 @@ class Post extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::deleting(function ($photo) {
+            if (Storage::disk('public')->exists($photo->image_path)) {
+                Storage::disk('public')->delete($photo->image_path);
+            }
+        });
+
     }
 }

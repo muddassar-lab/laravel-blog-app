@@ -103,9 +103,6 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::with('posts')->find($id);
-        foreach ($category->posts() as $post) {
-            Storage::delete($post->image);
-        }
         $category->delete();
 
         return Redirect::route('categories.home')->with('success', 'Category Deleted Successfully');

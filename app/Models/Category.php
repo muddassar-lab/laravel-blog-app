@@ -42,4 +42,17 @@ class Category extends Model
     {
         return $this->hasMany(Post::class, 'category_id');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($category) {
+            $category->posts()->each(
+                function ($post) {
+                    $post->delete();
+                }
+            );
+        });
+
+    }
 }
