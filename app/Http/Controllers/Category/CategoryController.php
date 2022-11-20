@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Redirect;
+use Storage;
 
 class CategoryController extends Controller
 {
@@ -18,6 +19,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::latest()->paginate(5);
+
         return Inertia::render('Category/Index', ['categories' => $categories]);
     }
 
@@ -28,7 +30,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return Inertia::render("Category/Create");
+        return Inertia::render('Category/Create');
     }
 
     /**
@@ -40,10 +42,11 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => "required|string|max:12"
+            'name' => 'required|string|max:12',
         ]);
         Category::create(['name' => $request->name]);
-        return Redirect::route('categories.home');
+
+        return Redirect::route('categories.home')->with('success', 'Category Added Successfully');
     }
 
     /**
@@ -68,6 +71,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
+
         return Inertia::render('Category/Edit', ['category' => $category]);
     }
 
@@ -81,12 +85,13 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => "required|string|max:12"
+            'name' => 'required|string|max:12',
         ]);
         $category = Category::find($id);
         $category->name = $request->name;
         $category->save();
-        return Redirect::route('categories.home');
+
+        return Redirect::route('categories.home')->with('success', 'Category Updated Successfully');
     }
 
     /**
@@ -97,9 +102,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
+        $category = Category::with('posts')->find($id);
+        foreach ($category->posts() as $post) {
+            Storage::delete($post->image);
+        }
         $category->delete();
-        return Redirect::route('categories.home');
 
+        return Redirect::route('categories.home')->with('success', 'Category Deleted Successfully');
     }
 }

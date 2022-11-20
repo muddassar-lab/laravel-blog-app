@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $category_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Database\Factories\PostFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Post newQuery()
@@ -38,6 +39,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -50,24 +52,26 @@ class Post extends Model
         'image_path',
         'description',
         'category_id',
-        'author_id'
+        'author_id',
     ];
 
     protected $appends = ['full_image_path'];
+
     protected function fullImagePath(): Attribute
     {
         return new Attribute(
-            get: fn() => asset("storage/" . $this->image_path),
+            get: fn () => asset('storage/'.$this->image_path),
         );
     }
+
     //relations
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
-
 }

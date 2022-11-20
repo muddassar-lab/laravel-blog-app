@@ -4,12 +4,12 @@ import { Button, Input } from "@material-tailwind/react";
 import { useForm, usePage } from "@inertiajs/inertia-react";
 import PuffLoader from "react-spinners/PuffLoader";
 const Edit = () => {
-    const { category } = usePage().props;
-    const { data, setData, put, processing, errors, reset } = useForm({
+    const { category, errors } = usePage().props;
+    const { data, setData, put, processing, reset } = useForm({
         name: "",
         id: "",
     });
-    console.log(category);
+
     const handleChange = (event) => {
         setData(
             event.target.name,

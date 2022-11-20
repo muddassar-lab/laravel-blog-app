@@ -9,7 +9,7 @@ const PostRow = ({ post, name }) => {
             <td className="border px-4 py-2">{post.id}</td>
             <td>
                 <img
-                    className="h-[80px] w-[100px] "
+                    className="h-[70px] w-[100px] rounded-md "
                     src={post.full_image_path}
                     alt=""
                 />
@@ -23,7 +23,7 @@ const PostRow = ({ post, name }) => {
             <td className="border px-4 py-2">
                 {name != null ? name : post.category.name}
             </td>
-            <td className="flex flex-row items-center justify-center border px-4 py-2">
+            <td className="flex h-[73px] flex-row items-center justify-center border px-4 py-2">
                 <Link href={route("posts.edit", post.id)}>
                     <IconButton color="gray" className="mx-2">
                         <svg
@@ -64,7 +64,7 @@ const PostRow = ({ post, name }) => {
                         </svg>
                     </IconButton>
                 </Link>
-                <Link href={route("categories.show", post.id)}>
+                <Link href={route("posts.show", post.id)}>
                     <IconButton className="mx-2">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

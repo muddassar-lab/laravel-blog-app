@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\MatchOldPassword;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePostRequest extends FormRequest
+class UpdatePasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +25,9 @@ class StorePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|max:50',
-            'description' => 'required|string',
-            'category' => 'required|string',
-            'status' => 'required|string',
-            'image_path' => 'required|image|mimes:jpeg,png',
+            'current_password' => ['required', new MatchOldPassword],
+            'new_password' => ['required'],
+            'confirm_new_password' => ['same:new_password'],
         ];
     }
 }

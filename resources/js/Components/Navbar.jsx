@@ -18,16 +18,12 @@ const Navbar = () => {
                         <Button variant="outlined">{auth.user.name}</Button>
                     </MenuHandler>
                     <MenuList>
-                        <MenuItem>Profile</MenuItem>
-                        <MenuItem>
-                            <Link
-                                href={route("logout")}
-                                as="button"
-                                method="POST"
-                            >
-                                Logout
-                            </Link>
-                        </MenuItem>
+                        <Link href={route("profile.home")}>
+                            <MenuItem>Profile</MenuItem>
+                        </Link>
+                        <Link href={route("logout")} as="button" method="POST">
+                            <MenuItem>Logout</MenuItem>{" "}
+                        </Link>
                     </MenuList>
                 </Menu>
             </div>

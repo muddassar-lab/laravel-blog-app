@@ -29,7 +29,7 @@ class UpdatePostRequest extends FormRequest
             'category' => 'required|integer',
             'status' => 'required|string',
             'image_path' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png'
+            'image' => 'nullable|image|mimes:jpeg,png',
         ];
     }
 }

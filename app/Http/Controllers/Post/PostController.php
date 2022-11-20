@@ -8,7 +8,6 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use Auth;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Redirect;
 use Storage;
@@ -20,9 +19,10 @@ class PostController extends Controller
      *
      * @return \Inertia\Response
      */
-    public function index(): \Inertia\Response
+    public function index()
     {
         $posts = Post::with('category')->latest()->paginate(5);
+
         return Inertia::render('Post/Index', ['posts' => $posts]);
     }
 
@@ -34,6 +34,7 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
+
         return Inertia::render('Post/Create', ['categories' => $categories]);
     }
 
@@ -45,8 +46,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-
-        $path = $request->file('image_path')->store('posts', "public");
+        $path = $request->file('image_path')->store('posts', 'public');
 
         $uid = Auth::id();
         Post::create([
@@ -57,19 +57,21 @@ class PostController extends Controller
             'author_id' => $uid,
             'image_path' => $path,
         ]);
-        return Redirect::route('posts.home');
 
+        return Redirect::route('posts.home')->with('success', 'Post Added Successfully');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function show($id)
     {
-        //
+        $post = Post::with('category')->find($id);
+
+        return Inertia::render('Post/View', ['post' => $post]);
     }
 
     /**
@@ -82,6 +84,7 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $post = Post::with('category')->find($id);
+
         return Inertia::render('Post/Edit', ['postModel' => $post, 'categories' => $categories]);
     }
 
@@ -94,8 +97,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, int $id)
     {
-
-        $path = NULL;
+        $path = null;
         if ($request->hasFile('image')) {
             if (Storage::delete($request->image_path)) {
                 $path = $request->file('image')->store('posts');
@@ -111,7 +113,8 @@ class PostController extends Controller
         $post->category_id = $request->category;
         $post->status = $request->status;
         $post->save();
-        return Redirect::route("posts.home");
+
+        return Redirect::route('posts.home')->with('success', 'Post Updated Successfully');
     }
 
     /**
@@ -126,6 +129,7 @@ class PostController extends Controller
         $post = Post::find($id);
         Storage::delete($post->image_path);
         $post->delete();
-        return Redirect::route('posts.home');
+
+        return Redirect::route('posts.home')->with('success', 'Post Deleted Successfully');
     }
 }
