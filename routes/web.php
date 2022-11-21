@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\UpdatePasswordController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Models\Category;
@@ -68,6 +69,14 @@ Route::middleware('auth')->group(function () {
             Route::put('/update/password', [UpdatePasswordController::class, 'update'])->name('profile.password.update');
         }
     );
+
+    //payment routes
+    Route::prefix('payments')->group(
+        function () {
+            Route::get('/', [PaymentController::class, 'index'])->name('payments.home');
+            Route::get("/create", [PaymentController::class, 'create'])->name('payments.create');
+        }
+    );
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
