@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Button } from "@material-tailwind/react";
+import { Alert, Button } from "@material-tailwind/react";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 
 function scriptAlreadyLoaded(src) {
@@ -66,12 +66,15 @@ function addWorldpayCheckoutToPage() {
 
 const Create = () => {
     const [checkout, setCheckout] = useState(null);
+    const [error, setError] = useState(null);
     const checkoutScriptUrl =
         "https://try.access.worldpay.com/access-checkout/v1/checkout.js";
 
     function generateSession() {
+        setError(null);
         checkout.generateSessionState(function (error, session) {
             if (error) {
+                setError(error);
                 console.warn(`Failed to generate session: ${error}`);
                 return;
             }
@@ -114,7 +117,7 @@ const Create = () => {
             <div className="pt-4">
                 <div className=" max-w-xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="flex flex-col items-start justify-center border-b border-gray-200 bg-white p-6">
+                        <div className="flex flex-col items-start justify-start border-b border-gray-200 bg-white p-6">
                             <section className="container" id="container">
                                 <section className="card flex flex-col">
                                     <section
@@ -151,8 +154,12 @@ const Create = () => {
                                             Clear
                                         </Button>
                                     </section>
+                                    {error != null ? (
+                                        <Alert color="red" id="error-payment">
+                                            {error}
+                                        </Alert>
+                                    ) : null}
                                 </section>
-                                <div id="info" className="info" />
                             </section>
                         </div>
                     </div>
