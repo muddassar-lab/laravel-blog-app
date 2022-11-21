@@ -36,30 +36,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
     //Category Routes
-    Route::prefix('categories')->group(
-        function () {
-            Route::get('/', [CategoryController::class, 'index'])->name('categories.home');
-            Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');
-            Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-            Route::get('/{id}', [CategoryController::class, 'show'])->name('categories.show');
-            Route::post('/', [CategoryController::class, 'store'])->name('categories.store');
-            Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
-            Route::put('/{id}', [CategoryController::class, 'update'])->name('categories.update');
-        }
-    );
+    Route::resource('categories', CategoryController::class);
+
 
     //Post Routes
-    Route::prefix('posts')->group(
-        function () {
-            Route::get('/', [PostController::class, 'index'])->name('posts.home');
-            Route::delete('/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
-            Route::get('/create', [PostController::class, 'create'])->name('posts.create');
-            Route::post('/', [PostController::class, 'store'])->name('posts.store');
-            Route::get('/{id}/edit', [PostController::class, 'edit'])->name('posts.edit');
-            Route::put('/{id}', [PostController::class, 'update'])->name('posts.update');
-            Route::get('/{id}', [PostController::class, 'show'])->name('posts.show');
-        }
-    );
+    Route::resource('posts', PostController::class);
 
     //Profile Routes
     Route::prefix('profile')->group(
@@ -71,6 +52,7 @@ Route::middleware('auth')->group(function () {
     );
 
     //payment routes
+
     Route::prefix('payments')->group(
         function () {
             Route::get('/', [PaymentController::class, 'index'])->name('payments.home');

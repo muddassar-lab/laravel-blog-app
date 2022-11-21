@@ -54,6 +54,25 @@ const Sidebar = () => {
                                 </span>
                             </Link>
                         </li>
+                        <li
+                            className={`
+                            flex justify-center rounded-sm border-r-4 
+                            ${
+                                url.startsWith("/payments")
+                                    ? "border-white bg-gray-800"
+                                    : "border-gray-900 bg-gray-900"
+                            }    
+                            py-2`}
+                        >
+                            <Link
+                                href="/payments"
+                                className="flex items-center space-x-3 rounded-md p-2"
+                            >
+                                <span className="text-[25px]  text-white">
+                                    Payments
+                                </span>
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </div>

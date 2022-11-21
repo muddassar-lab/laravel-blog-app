@@ -58,7 +58,7 @@ class PostController extends Controller
             'image_path' => $path,
         ]);
 
-        return Redirect::route('posts.home')->with('success', 'Post Added Successfully');
+        return Redirect::route('posts.index')->with('success', 'Post Added Successfully');
     }
 
     /**
@@ -114,7 +114,7 @@ class PostController extends Controller
         $post->status = $request->status;
         $post->save();
 
-        return Redirect::route('posts.home')->with('success', 'Post Updated Successfully');
+        return Redirect::route('posts.index')->with('success', 'Post Updated Successfully');
     }
 
     /**
@@ -129,6 +129,6 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->delete();
 
-        return Redirect::route('posts.home')->with('success', 'Post Deleted Successfully');
+        return Redirect::route('posts.index')->with('success', 'Post Deleted Successfully');
     }
 }

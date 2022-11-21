@@ -46,7 +46,7 @@ class CategoryController extends Controller
         ]);
         Category::create(['name' => $request->name]);
 
-        return Redirect::route('categories.home')->with('success', 'Category Added Successfully');
+        return Redirect::route('categories.index')->with('success', 'Category Added Successfully');
     }
 
     /**
@@ -91,7 +91,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->save();
 
-        return Redirect::route('categories.home')->with('success', 'Category Updated Successfully');
+        return Redirect::route('categories.index')->with('success', 'Category Updated Successfully');
     }
 
     /**
@@ -105,6 +105,6 @@ class CategoryController extends Controller
         $category = Category::with('posts')->find($id);
         $category->delete();
 
-        return Redirect::route('categories.home')->with('success', 'Category Deleted Successfully');
+        return Redirect::route('categories.index')->with('success', 'Category Deleted Successfully');
     }
 }
